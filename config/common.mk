@@ -27,7 +27,7 @@ $(eval TARGET_BOOTANIMATION_NAME := $(shell \
 endef
 $(foreach size,$(bootanimation_sizes), $(call check_and_set_bootanimation,$(size)))
 
-PRODUCT_BOOTANIMATION := vendor/cm/prebuilt/common/bootanimation/$(TARGET_BOOTANIMATION_NAME).zip
+PRODUCT_BOOTANIMATION := vendor/omni/prebuilt/common/bootanimation/$(TARGET_BOOTANIMATION_NAME).zip
 endif
 
 # general properties
@@ -64,7 +64,7 @@ PRODUCT_COPY_FILES += \
     
 # Wallpaper APP
 PRODUCT_COPY_FILES += \
-        vendor/cm/prebuilt/common/apk/TeamubWallpapers.apk:system/app/TeamubWallpapers.apk    
+        vendor/omni/prebuilt/common/apk/TeamubWallpapers.apk:system/app/TeamubWallpapers.apk    
 
 # Init script file with omni extras
 PRODUCT_COPY_FILES += \
