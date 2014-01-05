@@ -64,7 +64,7 @@ PRODUCT_COPY_FILES += \
     
 # Wallpaper APP
 PRODUCT_COPY_FILES += \
-        vendor/omni/prebuilt/apk/TeamubWallpapers.apk:system/app/TeamubWallpapers.apk    
+        vendor/omni/prebuilt/apk/TeamUBWallpapers.apk:system/app/TeamUBWallpapers.apk    
 
 # Init script file with omni extras
 PRODUCT_COPY_FILES += \
