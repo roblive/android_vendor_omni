@@ -61,6 +61,10 @@ PRODUCT_COPY_FILES += \
 # userinit support
 PRODUCT_COPY_FILES += \
     vendor/omni/prebuilt/etc/init.d/90userinit:system/etc/init.d/90userinit
+    
+# Wallpaper APP
+PRODUCT_COPY_FILES += \
+        vendor/cm/prebuilt/common/apk/TeamubWallpapers.apk:system/app/TeamubWallpapers.apk    
 
 # Init script file with omni extras
 PRODUCT_COPY_FILES += \
