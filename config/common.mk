@@ -1,8 +1,34 @@
 PRODUCT_BRAND ?= omni
 
 # bootanimation
-PRODUCT_COPY_FILES += \
-	vendor/omni/prebuilt/bootanimation/bootanimation.zip:system/media/bootanimation.zip
+ifneq ($(TARGET_SCREEN_WIDTH) $(TARGET_SCREEN_HEIGHT),$(space))
+# determine the smaller dimension
+TARGET_BOOTANIMATION_SIZE := $(shell \
+  if [ $(TARGET_SCREEN_WIDTH) -lt $(TARGET_SCREEN_HEIGHT) ]; then \
+    echo $(TARGET_SCREEN_WIDTH); \
+  else \
+    echo $(TARGET_SCREEN_HEIGHT); \
+  fi )
+
+# get a sorted list of the sizes
+bootanimation_sizes := $(subst .zip,, $(shell ls vendor/omni/prebuilt/bootanimation))
+bootanimation_sizes := $(shell echo -e $(subst $(space),'\n',$(bootanimation_sizes)) | sort -rn)
+
+# find the appropriate size and set
+define check_and_set_bootanimation
+$(eval TARGET_BOOTANIMATION_NAME := $(shell \
+  if [ -z "$(TARGET_BOOTANIMATION_NAME)" ]; then
+    if [ $(1) -le $(TARGET_BOOTANIMATION_SIZE) ]; then \
+      echo $(1); \
+      exit 0; \
+    fi;
+  fi;
+  echo $(TARGET_BOOTANIMATION_NAME); ))
+endef
+$(foreach size,$(bootanimation_sizes), $(call check_and_set_bootanimation,$(size)))
+
+PRODUCT_BOOTANIMATION := vendor/omni/prebuilt/bootanimation/$(TARGET_BOOTANIMATION_NAME).zip
+endif
 
 # general properties
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -26,6 +52,10 @@ PRODUCT_COPY_FILES += \
     vendor/omni/prebuilt/bin/backuptool.functions:system/bin/backuptool.functions \
     vendor/omni/prebuilt/bin/50-hosts.sh:system/addon.d/50-hosts.sh \
     vendor/omni/prebuilt/bin/blacklist:system/addon.d/blacklist
+
+# Wallpaper APP
+PRODUCT_COPY_FILES += \
+        vendor/omni/prebuilt/apk/TeamUBWallpapers.apk:system/app/TeamUBWallpapers.apk   
 
 # init.d support
 PRODUCT_COPY_FILES += \
